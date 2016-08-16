@@ -3,4 +3,4 @@
 .direnv
 __pycache__
 *.pyc
-.secrets.py
+movieratings/movieratings/secrets.py
