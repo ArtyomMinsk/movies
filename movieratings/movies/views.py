@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 def index(request):
@@ -7,7 +7,8 @@ def index(request):
 
 
 def logout_view(request):
-    pass
+    logout(request)
+    # Redirect to a success page.
 
 
 def login_view(request):
@@ -19,10 +20,12 @@ def login_view(request):
             login(request, user)
             # Redirect to a success page.
         else:
-            pass
+
+            print('')
+
             # Return an 'invalid login' error message.
 
-    # return render(request, 'movies/index.html')
+    return render(request, 'movies/index.html')
 
 
 def movie_view(request):
