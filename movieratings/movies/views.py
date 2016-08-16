@@ -19,6 +19,7 @@ def login_view(request):
             login(request, user)
             # Redirect to a success page.
         else:
+            pass
             # Return an 'invalid login' error message.
 
     # return render(request, 'movies/index.html')
