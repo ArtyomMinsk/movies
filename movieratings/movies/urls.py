@@ -1,4 +1,6 @@
 from django.conf.urls import url
+from django.contrib import admin
+from django.contrib.auth import views as auth_views
 
 from . import views
 
@@ -6,9 +8,6 @@ app_name = 'movies'
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-
-    url(r'logout/^$', views.logout_view, name='logout_view'),
-    url(r'login/^$', views.login_view, name='login_view'),
 
     url(r'^$', views.movie_view, name='movie_view'),  # TODO: Update this
     url(r'^$', views.user_view, name='user_view'),  # TODO: Update this

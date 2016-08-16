@@ -69,7 +69,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'movieratings.wsgi.application'
 
 
-
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
 
@@ -107,3 +106,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Login urls
+# https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
+
+LOGIN_REDIRECT_URL = '/index/'
+
+LOGIN_URL = '/login/'
