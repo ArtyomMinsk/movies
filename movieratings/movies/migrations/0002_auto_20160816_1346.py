@@ -4,23 +4,24 @@ from __future__ import unicode_literals
 from django.db import migrations, models
 from django.contrib.auth.models import User
 import pandas as pd
+import os
 
 
 # TODO: Set relative path for import data
 def import_data(apps, schema_editor):
-    file_path = "/Users/nrogers/Desktop/IronYard/movies/ml-1m/"
-    movies = pd.read_csv(file_path + "movies.dat",
+    file_path = os.path.abspath('../ml-1m')
+    movies = pd.read_csv(file_path + "/movies.dat",
                          sep="::",
                          names=['movie_id', 'title', 'genre'],
                          engine='python')
 
-    users = pd.read_csv(file_path + "users.dat",
+    users = pd.read_csv(file_path + "/users.dat",
                         sep="::",
                         names=['user_id', 'gender',
                                'age', 'occupation', 'zip_code'],
                         engine='python')
 
-    ratings = pd.read_csv(file_path + "ratings.dat",
+    ratings = pd.read_csv(file_path + "/ratings.dat",
                           sep="::",
                           names=['user_id', 'movie_id', 'score', 'timestamp'],
                           engine='python')
