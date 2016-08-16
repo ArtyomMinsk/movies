@@ -18,5 +18,5 @@ def movie_view(request):
     pass
 
 
-def detail_view(request):
+def user_view(request):
     pass
