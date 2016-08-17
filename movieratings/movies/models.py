@@ -7,7 +7,7 @@ class Movie(models.Model):
     genre = models.CharField(max_length=500)
 
     def __str__(self):
-        return "{}: {}".format(self.id, self.title)
+        return "{}: {} {}".format(self.id, self.title, self.genre)
 
 
 class Rater(models.Model):
@@ -18,7 +18,7 @@ class Rater(models.Model):
     user = models.OneToOneField(User)
 
     def __str__(self):
-        return "{}".format(self.id)
+        return "{}. Age:{} Gender:{}".format(self.id, self.age, self.gender)
 
 
 class Rating(models.Model):
