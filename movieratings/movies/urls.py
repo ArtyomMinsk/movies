@@ -9,8 +9,10 @@ app_name = 'movies'
 urlpatterns = [
     url(r'^$', views.index, name='index'),
 
-    url(r'^$', views.movie_view, name='movie_view'),  # TODO: Update this
-    url(r'^$', views.user_view, name='user_view'),  # TODO: Update this
+    url(r'^movie$', views.movie_view, name='movie_view'),
+    url(r'^movie/(?P<question_id>[0-9]+)/$', views.movie_view, name='movie_view'),
+    url(r'^user$', views.user_view, name='user_view'),
+    url(r'^user/(?P<question_id>[0-9]+)/$', views.user_view, name='user_view'),
 ]
 
 # For reference from: https://docs.djangoproject.com/en/1.10/intro/tutorial03/
