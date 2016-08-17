@@ -24,7 +24,6 @@ def index(request):
 
 def movie_view(request):
     movies = Movie.objects.all()
-    print(movies)
     context = {
         'Movies': movies,
     }
@@ -32,4 +31,8 @@ def movie_view(request):
 
 
 def user_view(request):
-    pass
+    users = Rater.objects.all()
+    context = {
+        'Users': users,
+    }
+    return render(request, 'movies/user_view.html', context)
