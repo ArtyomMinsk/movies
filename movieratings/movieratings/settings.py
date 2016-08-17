@@ -110,6 +110,6 @@ STATIC_URL = '/static/'
 # Login urls
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
 
-LOGIN_REDIRECT_URL = '/index/'
+LOGIN_REDIRECT_URL = '/'
 
 LOGIN_URL = '/login/'
