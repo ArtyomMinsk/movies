@@ -1,0 +1,9 @@
+<h1>{{ movie.title }}</h1>
+
+<h3>{{ movie.genre }}</h3>
+
+<ul>
+  {% for item in Movie.score_set.all %}
+      <li>{{ Rating.score }}</li>
+  {% endfor %}
+</ul>

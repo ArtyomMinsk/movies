@@ -17,7 +17,10 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 urlpatterns = [
+
     url(r'^', include('movies.urls')),
     url('^', include('django.contrib.auth.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^movie/', include('movies.urls')),
+    url(r'^rater/', include('movies.urls')),
 ]

@@ -1,0 +1,9 @@
+<h1>{{ rater.id }}</h1>
+
+<h3>{{ rater.gender }}</h3> 
+
+<ul>
+  {% for rating in rater.score_set.all %}
+    <li>{{ rating.score }}</li>
+  {% endfor %}
+</ul>
