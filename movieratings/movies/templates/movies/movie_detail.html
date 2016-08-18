@@ -4,8 +4,8 @@
 
 {{ avg_rate }}
 
-<ol>
-    {% for item in Movie.score_set.all %}
-        <li>{{ Rating.score }}</li>
+<ul>
+    {% for item in movie.rating_set.all %}
+        <li>User: {{ item.rater.user.username }} Score: {{ item.score }} at {{ item.timestamp }}</li>
     {% endfor %}
-</ol>
+</ul>
