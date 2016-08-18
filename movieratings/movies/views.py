@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.db.models import Count
 from .models import Movie, Rater, Rating
 from django.http import Http404
+from django.db.models import Avg
 
 
 # Create your views here.
@@ -10,14 +11,17 @@ def index(request):
     all_ratings = {}
     m = Movie.objects.all()
     for movie in m:
-        ratings = movie.rating_set.all()
-        ratings = [rating.score for rating in ratings]
-        if len(ratings) > 0:
-            avg_rating = sum(ratings)/len(ratings)
-        all_ratings[movie.id] = avg_rating
+        avg_rate = Movie.objects.aggregate(average_rating=Avg('rating__score'))
+
+        # ratings = movie.rating_set.all()
+        # ratings = [rating.score for rating in ratings]
+        # if len(ratings) > 0:
+        #     avg_rating = sum(ratings)/len(ratings)
+        all_ratings[movie.id] = avg_rate
     context = {
         'Movies': m,
         'Avg_rating': all_ratings,
+        #'Avg_rate': avg_rate,
     }
 
     return render(request, 'movies/index.html', context)
@@ -32,12 +36,14 @@ def movie_view(request):
 
 
 def movie_detail(request, movie_id):
+    avg_rate = Movie.objects.aggregate(average_rating=Avg('rating__score'))
     try:
         movie = Movie.objects.get(pk=movie_id)
     except Movie.DoesNotExist:
         raise Http404("Movie doesn't exist")
     context = {
         'movie': movie,
+        'avg_rate': avg_rate,
     }
     return render(request, 'movies/movie_detail.html', context)
 
