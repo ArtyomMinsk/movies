@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from statistics import mean
 
 class Movie(models.Model):
     title = models.CharField(max_length=200)
@@ -8,6 +9,9 @@ class Movie(models.Model):
 
     def __str__(self):
         return "{}: {} {}".format(self.id, self.title, self.genre)
+
+    def get_average_score(self):
+        return mean([rating.score for rating in self.rating_set.all()])    
 
 
 class Rater(models.Model):
@@ -19,6 +23,9 @@ class Rater(models.Model):
 
     def __str__(self):
         return "{}. Age:{} Gender:{}".format(self.id, self.age, self.gender)
+
+    def get_average_score(self):
+        return mean([rating.score for rating in self.rating_set.all()])
 
 
 class Rating(models.Model):
