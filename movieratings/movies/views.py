@@ -8,7 +8,7 @@ from django.db.models import Avg
 
 # Create your views here.
 def index(request):
-    all_ratings = {}
+    # all_ratings = {}
     m = Movie.objects.all()
     for movie in m:
         avg_rate = Movie.objects.aggregate(average_rating=Avg('rating__score'))
@@ -21,9 +21,8 @@ def index(request):
     context = {
         'Movies': m,
         'Avg_rating': all_ratings,
-        #'Avg_rate': avg_rate,
-    }
-
+        # 'Avg_rate': avg_rate,
+        }
     return render(request, 'movies/index.html', context)
 
 
