@@ -7,17 +7,17 @@ from django.http import Http404
 
 # Create your views here.
 def index(request):
-    all_ratings = {}
+    # all_ratings = {}
     m = Movie.objects.all()
-    for movie in m:
-        ratings = movie.rating_set.all()
-        ratings = [rating.score for rating in ratings]
-        if len(ratings) > 0:
-            avg_rating = sum(ratings)/len(ratings)
-        all_ratings[movie.id] = avg_rating
+    # for movie in m:
+    #     ratings = movie.rating_set.all()
+    #     ratings = [rating.score for rating in ratings]
+    #     if len(ratings) > 0:
+    #         avg_rating = sum(ratings)/len(ratings)
+    #     all_ratings[movie.id] = avg_rating
     context = {
         'Movies': m,
-        'Avg_rating': all_ratings,
+        # 'Avg_rating': all_ratings,
     }
 
     return render(request, 'movies/index.html', context)

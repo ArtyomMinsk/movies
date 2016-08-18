@@ -13,7 +13,7 @@ urlpatterns = [
     url(r'^rater/$', views.user_view, name='user_view'),
     url(r'^rater/(?P<rater_id>[0-9]+)/$', views.user_detail, name='user_detail'),
 ]
-# There's nothing differentiating line 12 and 14 so I don't think line 14 will be hit
+
 
 # For reference from: https://docs.djangoproject.com/en/1.10/intro/tutorial03/
 # urlpatterns = [
