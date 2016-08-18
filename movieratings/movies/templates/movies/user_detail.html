@@ -1,9 +1,12 @@
-<h1>{{ rater.id }}</h1>
+<h1>User Id: {{ rater.id }}</h1>
 
-<h3>{{ rater.gender }}</h3> 
+<h3>gender: {{ rater.gender }}</h3>
+<h3>age: {{ rater.age }}</h3>
+<h3>occupation: {{ rater.occupation }}</h3>
+<h3>zipcode: {{ rater.zip_code }}</h3>
 
 <ul>
-  {% for rating in rater.score_set.all %}
-    <li>{{ rating.score }}</li>
-  {% endfor %}
+    {% for rating in rater.score_set.all %}
+        <li>{{ rating.score }}</li>
+    {% endfor %}
 </ul>
