@@ -69,6 +69,55 @@ def import_data(apps, schema_editor):
     print("Ratings imported")
 
 
+def update_occupation_values(apps, schema_editor):
+    Rater = apps.get_model("movies", "Rater")
+    raters = Rater.objects.all()
+    occupation_map = {
+        '0':  "other or not specified",
+        '1':  "academic/educator",
+        '2':  "artist",
+        '3':  "clerical/admin",
+        '4':  "college/grad student",
+        '5':  "customer service",
+        '6':  "doctor/health care",
+        '7':  "executive/managerial",
+        '8':  "farmer",
+        '9':  "homemaker",
+        '10':  "K-12 student",
+        '11':  "lawyer",
+        '12':  "programmer",
+        '13':  "retired",
+        '14':  "sales/marketing",
+        '15':  "scientist",
+        '16':  "self-employed",
+        '17':  "technician/engineer",
+        '18':  "tradesman/craftsman",
+        '19':  "unemployed",
+        '20':  "writer"
+    }
+
+    for rater in raters:
+        rater.occupation = occupation_map[rater.occupation]
+        rater.save()
+
+
+def update_age_values(apps, schema_editor):
+    Rater = apps.get_model("movies", "Rater")
+    raters = Rater.objects.all()
+    age_map = {
+     '1':  "Under 18",
+     '18':  "18-24",
+     '25':  "25-34",
+     '35':  "35-44",
+     '45':  "45-49",
+     '50':  "50-55",
+     '56':  "56+",
+     }
+    for rater in raters:
+        rater.age = age_map[rater.age]
+        rater.save()
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -76,5 +125,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(import_data)
+        migrations.RunPython(import_data),
+        migrations.RunPython(update_occupation_values),
+        migrations.RunPython(update_age_values),
     ]
