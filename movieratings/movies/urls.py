@@ -22,6 +22,7 @@ urlpatterns = [
                                           form_class=UserCreationForm,
                                           success_url='/'
                                           )),
+    # url(r'^reg2/', include('registration.backends.simple.urls'))
 ]
 
 

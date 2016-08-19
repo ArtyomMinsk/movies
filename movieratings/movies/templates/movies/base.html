@@ -47,7 +47,13 @@
                     </form>
                 </ul>
                 <ul class="nav navbar navbar-nav navbar-right">
-                  <li><a href="#">Login</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'movies:user_detail' user.id %}">You're logged in as {{ user.id }}</a></li>
+                        <li><a href="{% url 'logout' %}">Logout</a></li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}">Login</a></li>
+                    {% endif %}
+
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
