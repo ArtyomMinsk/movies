@@ -13,7 +13,7 @@ class Movie(models.Model):
 
     def get_average_score(self):
         if len(self.rating_set.all()) > 0:
-            self.rating_set.all().aggregate(Avg('score'))['score__avg']
+            return self.rating_set.all().aggregate(Avg('score'))['score__avg']
         else:
             return "Has not been rated"
 
@@ -37,7 +37,7 @@ class Rater(models.Model):
 
     def get_average_score(self):
         if len(self.rating_set.all()) > 0:
-            self.rating_set.all().aggregate(Avg('score'))['score__avg']
+            return self.rating_set.all().aggregate(Avg('score'))['score__avg']
         else:
             return "Has not been rated"
 
