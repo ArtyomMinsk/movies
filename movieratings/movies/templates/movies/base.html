@@ -30,13 +30,16 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">
-                    <img src="http://placehold.it/150x50&text=Logo" alt="">
+                <a class="navbar-brand" href="{% url 'movies:index' %}">
+                    <img src="{% static "movies/img/logo.png" %}" alt="">
                 </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
+                    <li>
+                      <a href="{% url 'movies:index' %}">Movies</a>
+                    </li>
                     <li>
                         <a href="#">About</a>
                     </li>
@@ -52,6 +55,7 @@
                         <li><a href="{% url 'movies:user_detail' user.id %}">You're logged in as {{ user.id }}</a></li>
                         <li><a href="{% url 'logout' %}">Logout</a></li>
                     {% else %}
+                        <li><a href="{% url 'movies:register_user' %}">Register</a></li>
                         <li><a href="{% url 'login' %}">Login</a></li>
                     {% endif %}
 

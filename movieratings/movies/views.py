@@ -1,11 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import Count
 from .models import Movie, Rater, Rating
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.db.models import Avg
+from django.urls import reverse
 
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
 from .forms import RaterForm
 
 
@@ -59,6 +61,7 @@ def user_detail(request, rater_id):
 
 
 def register_user(request):
+    print(request.method)
     if request.method == 'POST':
         rf = RaterForm(request.POST, prefix='rater')
         uf = UserCreationForm(request.POST, prefix='user')
@@ -69,12 +72,13 @@ def register_user(request):
             rater.user_id = user.id
             rater.id = user.id
             rater.save()
-            return HttpResponseRedirect('/')
-    else:
-        rf = RaterForm(prefix='rater')
-        uf = UserCreationForm(prefix='user')
-        context = {'raterform': rf, 'userform': uf}
-        return render(request, 'registration/register.html', context)
+            return HttpResponseRedirect(reverse('movies:index'))
+        else:
+            messages.error(request, "Error")
+    rf = RaterForm(prefix='rater')
+    uf = UserCreationForm(prefix='user')
+    context = {'raterform': rf, 'userform': uf}
+    return render(request, 'registration/register.html', context)
 
 
 def test_table(request):
