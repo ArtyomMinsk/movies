@@ -22,13 +22,15 @@ class Movie(models.Model):
                 num_ratings=Count('rating')).filter(
                 num_ratings__gt=10).annotate(
                 average_rating=Avg('rating__score')).values(
-                    'title', 'average_rating').order_by('-average_rating')[:n]
+                'id',
+                'title',
+                'average_rating').order_by('-average_rating')[:n]
 
 
 class Rater(models.Model):
-    age = models.IntegerField(null=True)
+    age = models.CharField(max_length=10)
     gender = models.CharField(max_length=1)
-    occupation = models.CharField(max_length=200)  # TODO: Make sure our migration accounts for this.
+    occupation = models.CharField(max_length=200)
     zip_code = models.CharField(max_length=10)
     user = models.OneToOneField(User)
 
