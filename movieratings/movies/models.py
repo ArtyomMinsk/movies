@@ -22,9 +22,10 @@ class Movie(models.Model):
                 num_ratings=Count('rating')).filter(
                 num_ratings__gt=10).annotate(
                 average_rating=Avg('rating__score')).values(
-                'id',
-                'title',
-                'average_rating').order_by('-average_rating')[:n]
+                        'id',
+                        'title',
+                        'genre',
+                        'average_rating').order_by('-average_rating')[:n]
 
 
 class Rater(models.Model):

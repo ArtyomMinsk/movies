@@ -1,44 +1,40 @@
 {% extends "movies/base.html" %}
 {% load static %}
-
 {% block head %}
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 {% endblock %}
-
 {% block body %}
-<h1>{{ movie.title }}</h1>
-<h3>{{ movie.genre }}</h3>
-<h4>Average Rating: {{ average_score }}</h4>
-
     <div class="container-fluid">
         <table id="movies_table" class="table table-striped table-bordered" cellspacing="0" width="100%">
             <thead>
                 <tr>
-                    <th>User</th>
-                    <th>Score</th>
-                    <th>Timestamp</th>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Genre</th>
+                    <th>Average Rating</th>
                 </tr>
-            <tfoot>
-                <tr>
-                    <th>User</th>
-                    <th>Score</th>
-                    <th>Timestamp</th>
-                </tr>
-            </tfoot>
+                <tfoot>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Genre</th>
+                        <th>Average Rating</th>
+                    </tr>
+                </tfoot>
             </thead>
             <tbody>
-            {% for rating in movie.rating_set.all %}
+            {% for movie in movies %}
                 <tr>
-                    <td><a href="{% url 'movies:user_detail' rating.rater.id %}">{{ rating.rater.user.username }}</a></td>
-                    <td>{{ rating.score }}</td>
-                    <td>{{ rating.timestamp }}</td>
+                    <td>{{ movie.id }}</td>
+                    <td><a href="/movie/{{ movie.id }}/">{{ movie.title }}</a></td>
+                    <td>{{ movie.genre }}</td>
+                    <td>{{ movie.average_rating }}</td>
                 </tr>
             {% endfor %}
                 </tbody>
             </table>
     </div>
     {% endblock %}
-
     {% block scripts %}
         <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
