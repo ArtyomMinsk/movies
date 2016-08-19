@@ -1,11 +1,13 @@
-{% extends 'movies/base.html' %}
+{% extends "movies/base.html" %}
+
+{% block title %}Create an account{% endblock %}
+
 {% block body %}
+  <h1>Create an account</h1>
 
-<form action="" method="post">{% csrf_token %}
-    <table>
-    {{ form.as_table }}
-    </table>
-    <input type="submit" value="Save" />
-</form>
-
-{% endblock %}
+  <form action="" method="post">
+      {% csrf_token %}
+      {{ userform.as_p }}
+      {{ raterform.as_p }}
+      <input type="submit" value="Create the account">
+  </form>
