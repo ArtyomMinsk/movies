@@ -24,7 +24,7 @@ def movie_view(request):
 
 
 def movie_detail(request, movie_id):
-    avg_rate = Movie.objects.aggregate(average_rating=Avg('rating__score'))
+    avg_rate = Movie.get_average_score(movie_id)
     try:
         movie = Movie.objects.get(pk=movie_id)
     except Movie.DoesNotExist:
