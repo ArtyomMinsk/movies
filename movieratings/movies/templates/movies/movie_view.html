@@ -1,5 +1,7 @@
-<ol>
-  {% for movie in all_movies %}
-  <li><a href="/movie/{{ movie.id }}/">{{ movie.title }}</a></li>
-  {% endfor %}
-</ol>
+{% extends "movies/base.html" %}
+{% block body %}
+
+{% for movie in all_movies %}
+  <p><a href="/movie/{{ movie.id }}/">{{ movie.title }}</a><p>
+{% endfor %}
+{% endblock %}

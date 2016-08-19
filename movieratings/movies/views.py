@@ -24,14 +24,14 @@ def movie_view(request):
 
 
 def movie_detail(request, movie_id):
-    avg_rate = Movie.get_average_score(movie_id)
+    # avg_rate = Movie.get_average_score()
     try:
         movie = Movie.objects.get(pk=movie_id)
     except Movie.DoesNotExist:
         raise Http404("Movie doesn't exist")
     context = {
         'movie': movie,
-        'avg_rate': avg_rate,
+        # 'avg_rate': avg_rate,
     }
     return render(request, 'movies/movie_detail.html', context)
 

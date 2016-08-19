@@ -1,6 +1,6 @@
-{% load static %}
+{% extends "movies/base.html" %}
 {% block body %}
-<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
+
 <h1>User Id: {{ rater.id }}</h1>
 
 <h3>gender: {{ rater.gender }}</h3>
@@ -8,9 +8,7 @@
 <h3>occupation: {{ rater.occupation }}</h3>
 <h3>zipcode: {{ rater.zip_code }}</h3>
 
-<ul>
-    {% for item in rater.rating_set.all %}
-        <li>Movie: {{ item.movie.title }} Score: {{ item.score }} at {{ item.timestamp }}</li>
-    {% endfor %}
-</ul>
+{% for item in rater.rating_set.all %}
+  <p>Movie: {{ item.movie.title }} Score: {{ item.score }} at {{ item.timestamp }}<p>
+{% endfor %}
 {% endblock %}

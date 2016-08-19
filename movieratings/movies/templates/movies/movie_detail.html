@@ -1,11 +1,13 @@
+{% extends "movies/base.html" %}
+{% block body %}
+
 <h1>{{ movie.title }}</h1>
 
 <h3>{{ movie.genre }}</h3>
 
-{{ avg_rate }}
+<h4>Average Rating: {{ avg_rate }}</h4>
 
-<ul>
-    {% for item in movie.rating_set.all %}
-        <li>User: {{ item.rater.user.username }} Score: {{ item.score }} at {{ item.timestamp }}</li>
-    {% endfor %}
-</ul>
+{% for item in movie.rating_set.all %}
+  <p>User: {{ item.rater.user.username }} Score: {{ item.score }} at {{ item.timestamp }}</p>
+{% endfor %}
+{% endblock %}
