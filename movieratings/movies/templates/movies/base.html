@@ -29,10 +29,15 @@
             <div class="inner">
               <h3 class="masthead-brand">Movies</h3>
               <nav>
+                <!--Cycle through links for active?-->
                 <ul class="nav masthead-nav">
-                  <li class="active"><a href="{% url 'movies:index' %}">Home</a></li>
+                  <li><a href="{% url 'movies:index' %}">Home</a></li>
                   <li><a href="{% url 'movies:movie_view' %}">Movies</a></li>
-                  <li><a href="{% url 'login' %}">Login</a></li>
+                  {% if user.is_authenticated %}
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                  {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                  {% endif %}
                 </ul>
               </nav>
             </div>
