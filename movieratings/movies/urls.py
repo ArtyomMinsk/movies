@@ -23,6 +23,7 @@ urlpatterns = [
     #                                       success_url='/'
     #                                       )),
     url(r'^register/$', views.register_user, name='register_user')
+    url(r'^test/$', views.test_table, name='test_table'),
     # url(r'^reg2/', include('registration.backends.simple.urls'))
 ]
 

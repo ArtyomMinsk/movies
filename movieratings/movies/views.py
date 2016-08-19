@@ -56,17 +56,6 @@ def user_detail(request, rater_id):
     return render(request, 'movies/user_detail.html', context)
 
 
-# def register_user(request):
-#     if request.method == 'POST':
-#         form = MyRegistrationForm(request.POST)     # create form object
-#         if form.is_valid():
-#             form.save()
-#             return HttpResponseRedirect('/register_success')
-#     else:
-#         form = MyRegistrationForm()
-#     return render(request, 'register.html', {'form': form})
-
-
 def register_user(request):
     print("HELLO")
     if request.method == 'POST':
@@ -84,3 +73,12 @@ def register_user(request):
         print(uf)
         print(rf)
     return render(request, 'registration/register.html', {'uf': uf, 'rf': rf})
+
+
+def test_table(request):
+    # Inspiration: https://datatables.net/examples/styling/bootstrap.html
+    all_movies = Movie.objects.all()
+    context = {
+        'all_movies': all_movies,
+    }
+    return render(request, 'movies/test_table.html', context)
