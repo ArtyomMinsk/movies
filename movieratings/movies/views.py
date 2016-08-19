@@ -4,7 +4,9 @@ from django.db.models import Count
 from .models import Movie, Rater, Rating
 from django.http import Http404, HttpResponseRedirect
 from django.db.models import Avg
-from .forms import UserForm, RaterForm
+
+from django.contrib.auth.forms import UserCreationForm
+from .forms import RaterForm
 
 
 # Create your views here.
@@ -57,22 +59,22 @@ def user_detail(request, rater_id):
 
 
 def register_user(request):
-    print("HELLO")
     if request.method == 'POST':
-        uf = UserForm(request.POST, prefix='user')
         rf = RaterForm(request.POST, prefix='rater')
-        if uf.is_valid() * rf.is_valid():
-            user = uf.save()
+        uf = UserCreationForm(request.POST, prefix='user')
+        if rf.is_valid() * uf.is_valid():
+            user = uf.save(commit=False)
+            user.save()
             rater = rf.save(commit=False)
-            rater.user = user
+            rater.user_id = user.id
+            rater.id = user.id
             rater.save()
-            return HttpResponseRedirect('/register_success')
+            return HttpResponseRedirect('/')
     else:
-        uf = UserForm(prefix='user')
         rf = RaterForm(prefix='rater')
-        print(uf)
-        print(rf)
-    return render(request, 'registration/register.html', {'uf': uf, 'rf': rf})
+        uf = UserCreationForm(prefix='user')
+        context = {'raterform': rf, 'userform': uf}
+        return render(request, 'registration/register.html', context)
 
 
 def test_table(request):
