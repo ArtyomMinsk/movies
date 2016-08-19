@@ -18,10 +18,11 @@ urlpatterns = [
     url(r'^rater/$', views.user_view, name='user_view'),
     url(r'^rater/(?P<rater_id>[0-9]+)/$',
         views.user_detail, name='user_detail'),
-    url(r'^register/', CreateView.as_view(template_name='registration/register.html',
-                                          form_class=UserCreationForm,
-                                          success_url='/'
-                                          )),
+    url(r'^register/', CreateView.as_view(
+                            template_name='registration/register.html',
+                            form_class=UserCreationForm,
+                            success_url='/')),
+    url(r'^test/$', views.test_table, name='test_table'),
     # url(r'^reg2/', include('registration.backends.simple.urls'))
 ]
 

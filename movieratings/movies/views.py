@@ -53,3 +53,11 @@ def user_detail(request, rater_id):
         'rater': rater,
     }
     return render(request, 'movies/user_detail.html', context)
+
+def test_table(request):
+    # Inspiration: https://datatables.net/examples/styling/bootstrap.html
+    all_movies = Movie.objects.all()
+    context = {
+        'all_movies': all_movies,
+    }
+    return render(request, 'movies/test_table.html', context)
