@@ -4,3 +4,4 @@
 __pycache__
 *.pyc
 movieratings/movieratings/secrets.py
+movieratings/movies/moresecrets.py
