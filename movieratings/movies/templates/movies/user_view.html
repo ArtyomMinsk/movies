@@ -1,5 +1,7 @@
-<ol>
-  {% for rater in all_raters %}
-  <li><a href="/rater/{{ rater.id }}/">{{ rater.gender }} | {{ rater.age }} | {{ rater.occupation }} | {{ rater.zip_code }}</a></li>
-  {% endfor %}
-</ol>
+{% extends "movies/base.html" %}
+{% block body %}
+
+{% for rater in all_raters %}
+<p><a href="/rater/{{ rater.id }}/">{{ rater.gender }} | {{ rater.age }} | {{ rater.occupation }} | {{ rater.zip_code }}</a></p>
+{% endfor %}
+{% endblock %}

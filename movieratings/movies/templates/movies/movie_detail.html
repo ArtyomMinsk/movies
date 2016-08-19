@@ -8,6 +8,7 @@
 <h4>Average Rating: {{ average_score }}</h4>
 
 {% for item in movie.rating_set.all %}
-  <p>User: {{ item.rater.user.username }} Score: {{ item.score }} at {{ item.timestamp }}</p>
+
+  <p><a href="{% url 'movies:user_detail' item.rater.id %}"> User: {{ item.rater.user.username }} Score: {{ item.score }} at {{ item.timestamp }}</a></p>
 {% endfor %}
 {% endblock %}
