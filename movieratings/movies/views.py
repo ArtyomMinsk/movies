@@ -2,8 +2,9 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import Count
 from .models import Movie, Rater, Rating
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from django.db.models import Avg
+from .forms import UserForm, RaterForm
 
 
 # Create your views here.
@@ -53,3 +54,33 @@ def user_detail(request, rater_id):
         'rater': rater,
     }
     return render(request, 'movies/user_detail.html', context)
+
+
+# def register_user(request):
+#     if request.method == 'POST':
+#         form = MyRegistrationForm(request.POST)     # create form object
+#         if form.is_valid():
+#             form.save()
+#             return HttpResponseRedirect('/register_success')
+#     else:
+#         form = MyRegistrationForm()
+#     return render(request, 'register.html', {'form': form})
+
+
+def register_user(request):
+    print("HELLO")
+    if request.method == 'POST':
+        uf = UserForm(request.POST, prefix='user')
+        rf = RaterForm(request.POST, prefix='rater')
+        if uf.is_valid() * rf.is_valid():
+            user = uf.save()
+            rater = rf.save(commit=False)
+            rater.user = user
+            rater.save()
+            return HttpResponseRedirect('/register_success')
+    else:
+        uf = UserForm(prefix='user')
+        rf = RaterForm(prefix='rater')
+        print(uf)
+        print(rf)
+    return render(request, 'registration/register.html', {'uf': uf, 'rf': rf})
