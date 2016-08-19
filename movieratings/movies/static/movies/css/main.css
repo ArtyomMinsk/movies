@@ -44,6 +44,7 @@ body {
   -webkit-box-shadow: inset 0 0 100px rgba(0,0,0,.5);
           box-shadow: inset 0 0 100px rgba(0,0,0,.5);
 }
+
 .site-wrapper-inner {
   display: table-cell;
   vertical-align: top;
@@ -110,6 +111,7 @@ body {
  */
 
 .cover {
+  margin-top: 15%;
   padding: 0 20px;
 }
 .cover .btn-lg {
@@ -160,4 +162,13 @@ body {
   .cover-container {
     width: 700px;
   }
+}
+
+.site-wrapper {
+  background-color: #333;
+}
+
+.masthead {
+  background-color: #333;
+  position: absolute;
 }
