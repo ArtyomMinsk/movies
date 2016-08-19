@@ -9,6 +9,6 @@
 <h3>zipcode: {{ rater.zip_code }}</h3>
 
 {% for item in rater.rating_set.all %}
-  <p>Movie: {{ item.movie.title }} Score: {{ item.score }} at {{ item.timestamp }}<p>
+  <p><a href="{% url 'movies:movie_detail' item.movie.id %}">Movie: {{ item.movie.title }} Score: {{ item.score }} at {{ item.timestamp }}<p>
 {% endfor %}
 {% endblock %}
