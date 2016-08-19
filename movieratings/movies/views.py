@@ -8,12 +8,11 @@ from django.db.models import Avg
 
 # Create your views here.
 def index(request):
-    top_twenty = Movie.get_average_scores()
+    all_movies_scores = Movie.get_average_scores(10000)
     context = {
-        'Movies': top_twenty,
-        }
+        'movies': all_movies_scores
+    }
     return render(request, 'movies/index.html', context)
-
 
 def movie_view(request):
     all_movies = Movie.objects.all()
