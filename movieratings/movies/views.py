@@ -54,10 +54,11 @@ def user_detail(request, rater_id):
     }
     return render(request, 'movies/user_detail.html', context)
 
+
 def test_table(request):
     # Inspiration: https://datatables.net/examples/styling/bootstrap.html
-    all_movies = Movie.objects.all()
+    all_movies_scores = Movie.get_average_scores(10000)
     context = {
-        'all_movies': all_movies,
+        'movies': all_movies_scores
     }
     return render(request, 'movies/test_table.html', context)
