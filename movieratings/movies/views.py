@@ -31,7 +31,7 @@ def movie_detail(request, movie_id):
         raise Http404("Movie doesn't exist")
     context = {
         'movie': movie,
-        'average_score': average_score,
+        'average_score': '{0:.2f}'.format(average_score),
     }
     return render(request, 'movies/movie_detail.html', context)
 
