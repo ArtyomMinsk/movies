@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models import Count, Avg
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class Movie(models.Model):
@@ -51,12 +52,24 @@ class Rater(models.Model):
             average_rating=Avg('rating__score')).values(
                 'id', 'average_rating').order_by('-average_rating')[:n]
 
+    def get_score_for_movie(self, movie):
+        """Returns None if they have not rated the movie
+           Returns a rating object if they have rated the movie"""
+        try:
+            score = Rating.objects.get(movie=movie, rater=self)
+        except:
+            return None
+        else:
+            return score
+
 
 class Rating(models.Model):
+    CHOICES = [(i, i) for i in range(1, 6)]
     timestamp = models.DateTimeField(default=timezone.now)
-    score = models.IntegerField()
+    score = models.IntegerField(choices=CHOICES)
     rater = models.ForeignKey(Rater)
     movie = models.ForeignKey(Movie)
+    review = models.TextField(max_length=5000, blank=True, null=True)
 
     def __str__(self):
         return "{}: {}".format(self.movie.title, self.score)

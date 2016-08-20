@@ -7,7 +7,33 @@
 
 {% block body %}
 <h1>{{ movie.title }}</h1>
-<object style="height: 390px; width: 640px"><param name="movie"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="http://www.youtube.com/v/{{ search }}" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="640" height="390"></object>
+<object style="height: 390px; width: 640px"><param name="movie"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="http://www.youtube.com/v/{{ search }}" allowfullscreen="true" allowScriptAccess="always" width="640" height="390"></object>
+
+<p> {{ user_display }}</p>
+
+{% if user.is_authenticated %}
+    <form method="post" action="{% url 'movies:movie_detail' movie.id %}">
+    {% csrf_token %}
+    <table>
+    <tr>
+        <td>{{ rating_form.score.label_tag }}</td>
+        <td>{{ rating_form.score }}</td>
+    </tr>
+    <tr>
+        <td>{{ rating_form.review.label_tag }}</td>
+        <td>{{ rating_form.review }}</td>
+    </tr>
+    <tr>
+        <td>Review</td>
+        <td>Review</td>
+    </tr>
+    </table>
+
+    <input type="submit" value="Submit Rating" />
+    <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+{% endif %}
+
 <h3>{{ movie.genre }}</h3>
 <h4>Average Rating: {{ average_score }}</h4>
 
@@ -17,12 +43,14 @@
                 <tr>
                     <th>User</th>
                     <th>Score</th>
+                    <th>Review</th>
                     <th>Timestamp</th>
                 </tr>
             <tfoot>
                 <tr>
                     <th>User</th>
                     <th>Score</th>
+                    <th>Review</th>
                     <th>Timestamp</th>
                 </tr>
             </tfoot>
@@ -32,6 +60,7 @@
                 <tr>
                     <td><a href="{% url 'movies:user_detail' rating.rater.id %}">{{ rating.rater.user.username }}</a></td>
                     <td>{{ rating.score }}</td>
+                    <td>{{ rating.review }}</td>
                     <td>{{ rating.timestamp }}</td>
                 </tr>
             {% endfor %}

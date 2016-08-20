@@ -4,9 +4,10 @@ from django.contrib.auth.forms import UserCreationForm
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils import timezone
 
-from .forms import RaterForm
-from .models import Movie, Rater
+from .forms import RaterForm, RatingForm
+from .models import Movie, Rater, Rating
 from .youtube import youtube_search
 
 
@@ -28,8 +29,53 @@ def movie_view(request):
 
 def movie_detail(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
+    print("MOVIE: ", movie)
     search = youtube_search(movie.title + 'trailer')
     first_result = search[0]
+
+    rating_form = None
+    if request.user.is_authenticated():
+        rater = request.user.rater
+        user_rating = rater.get_score_for_movie(movie)
+        print("USER RATING: ", user_rating)
+
+        rating_form = RatingForm(request.POST)
+
+        if user_rating:
+            # User is logged in and has rated the movie
+            user_display = "You gave this movie a {}.".format(user_rating.score)
+        else:
+            # User is logged in, but has not rated the movie
+            user_display = "Click here to rate this movie."
+
+        if rating_form.is_valid():
+            print("Rating Form is Valid")
+            score = rating_form.cleaned_data['score']
+            review = rating_form.cleaned_data['review']
+            if user_rating:
+                print("User editing existing rating")
+                # Edit the existing rating
+                user_rating.score = score
+                user_rating.review = review
+                user_rating.timestamp = timezone.now()
+                user_rating.save()
+            else:
+                # Add a new rating for this user
+                print("New rating for unrated movie")
+
+                print("PRINT THIS ", rating_form)
+                user_rating = Rating(score=score, rater=rater, movie=movie, review=review)
+                # user_rating = rating_form.save(commit=False)
+                user_rating.save()
+
+        else:
+            print(rating_form)
+            print("invalid input")
+
+    else:
+        # User is not logged in
+        user_display = "Login to rate this movie."
+
     try:
         movie = Movie.objects.get(pk=movie_id)
         average_score = movie.get_average_score()
@@ -39,6 +85,8 @@ def movie_detail(request, movie_id):
         'search': first_result,
         'movie': movie,
         'average_score': '{0:.2f}'.format(average_score),
+        'user_display': user_display,
+        'rating_form': rating_form,
     }
     return render(request, 'movies/movie_detail.html', context)
 
