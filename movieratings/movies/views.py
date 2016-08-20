@@ -97,8 +97,21 @@ def test_table(request):
 @login_required
 def movies_for_you(request):
     user = request.user
-    user_ratings = user.rater.rating_set.all()
+    set1 = user.rater.rating_set.all()
+    # others = Rater.objects.filter(id__ne=user.rater.id)
+    others = Rater.objects.all().exclude(id=user.rater.id)
+    for rater in others:
+        rater = Rater.objects.get(pk=2)
+        set2 = rater.rating_set.all()
+        common1 = set1.filter(movie_id__in=[m.movie_id for m in set2]).order_by('movie_id')
+        common2 = set2.filter(movie_id__in=[m.movie_id for m in set1]).order_by('movie_id')
+        euclid = Rater.euclidean_distance(common1, common2)
+        break
     context = {
-        user_ratings: 'user_ratings',
+        'user_ratings': set1,
+        'rater_ratings': set2,
+        'common1': common1,
+        'common2': common2,
+        'euclid': euclid,
     }
     return render(request, 'movies/movies_for_you.html', context)

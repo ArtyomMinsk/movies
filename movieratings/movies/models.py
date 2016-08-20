@@ -51,6 +51,18 @@ class Rater(models.Model):
             average_rating=Avg('rating__score')).values(
                 'id', 'average_rating').order_by('-average_rating')[:n]
 
+    def euclidean_distance(v, w):
+        if len(v) is 0:
+            return 0
+
+        differences = [v[idx].score - w[idx].score for idx in range(len(v))]
+        squares = [diff ** 2 for diff in differences]
+        sum_of_squares = sum(squares)
+
+        return 1/(1 + (sum_of_squares ** 0.5))
+
+
+
 
 class Rating(models.Model):
     timestamp = models.DateTimeField(default=timezone.now)
