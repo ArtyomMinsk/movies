@@ -1,13 +1,13 @@
-from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
-from .models import Movie, Rater, Rating
-from django.http import Http404, HttpResponseRedirect
-from django.db.models import Avg
 from django.contrib.auth.forms import UserCreationForm
+from django.http import Http404, HttpResponseRedirect
+from django.shortcuts import render
+from django.urls import reverse
+
 from .forms import RaterForm
+from .models import Movie, Rater
 
 
-# Create your views here.
 def index(request):
     all_movies_scores = Movie.get_average_scores(10000)
     context = {
@@ -67,12 +67,21 @@ def register_user(request):
             rater.user_id = user.id
             rater.id = user.id
             rater.save()
-            return HttpResponseRedirect('/')
+            user = authenticate(username=uf.cleaned_data['username'],
+                                password=uf.cleaned_data['password1'],
+                                )
+            login(request, user)
+            return HttpResponseRedirect(reverse('movies:index'))
     else:
         rf = RaterForm(prefix='rater')
         uf = UserCreationForm(prefix='user')
-        context = {'raterform': rf, 'userform': uf}
-        return render(request, 'registration/register.html', context)
+    context = {'raterform': rf, 'userform': uf}
+    return render(request, 'registration/register.html', context)
+
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('movies:index'))
 
 
 def test_table(request):
