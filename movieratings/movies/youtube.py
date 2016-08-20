@@ -1,6 +1,6 @@
 from apiclient.discovery import build
 
-from moresecrets import DEVELOPER_KEY
+from .moresecrets import DEVELOPER_KEY
 
 
 YOUTUBE_API_SERVICE_NAME = 'youtube'
