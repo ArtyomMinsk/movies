@@ -70,12 +70,20 @@ def register_user(request):
             rater.user_id = user.id
             rater.id = user.id
             rater.save()
+            user = authenticate(username=uf.cleaned_data['username'],
+                                password=uf.cleaned_data['password1'],
+                                )
+            login(request, user)
             return HttpResponseRedirect(reverse('movies:index'))
     else:
         rf = RaterForm(prefix='rater')
         uf = UserCreationForm(prefix='user')
     context = {'raterform': rf, 'userform': uf}
     return render(request, 'registration/register.html', context)
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('movies:index'))
 
 
 def test_table(request):
