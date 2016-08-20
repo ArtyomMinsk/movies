@@ -27,14 +27,16 @@ def movie_view(request):
 
 
 def movie_detail(request, movie_id):
-    search = youtube_search(movie_id)
+    movie = Movie.objects.get(id=movie_id)
+    search = youtube_search(movie.title + 'trailer')
+    first_result = search[0]
     try:
         movie = Movie.objects.get(pk=movie_id)
         average_score = movie.get_average_score()
     except Movie.DoesNotExist:
         raise Http404("Movie doesn't exist")
     context = {
-        'search': search,
+        'search': first_result,
         'movie': movie,
         'average_score': '{0:.2f}'.format(average_score),
     }
