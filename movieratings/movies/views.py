@@ -1,10 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
-from django.db.models import Count
 from .models import Movie, Rater, Rating
 from django.http import Http404, HttpResponseRedirect
 from django.db.models import Avg
-
 from django.contrib.auth.forms import UserCreationForm
 from .forms import RaterForm
 

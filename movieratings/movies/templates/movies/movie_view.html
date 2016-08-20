@@ -2,6 +2,6 @@
 {% block body %}
 
 {% for movie in all_movies %}
-  <p><a href="/movie/{{ movie.id }}/">{{ movie.title }}</a><p>
+  <p><a href="{% url 'movies:movie_detail' movie.id%}">{{ movie.title }}</a><p>
 {% endfor %}
 {% endblock %}
