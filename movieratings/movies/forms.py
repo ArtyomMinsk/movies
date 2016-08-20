@@ -3,10 +3,15 @@ from django import forms
 from .models import Rater, Rating
 
 
-# class RatingForm(forms.ModelForm):
-#     class Meta:
-#         model = Rating
-#         fields = ('rating', 'review')
+class RatingForm(forms.ModelForm):
+    class Meta:
+        model = Rating
+        fields = ['score', 'review']
+        error_messages = {
+            'required': 'This field is required!',
+            'max_value': 'Please select an integer between 1 and 5',
+            'min_value': 'Please select an integer between 1 and 5',
+        }
 
 
 class RaterForm(forms.ModelForm):
