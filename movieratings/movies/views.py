@@ -7,7 +7,6 @@ from django.db.models import Avg
 from django.urls import reverse
 
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib import messages
 from .forms import RaterForm
 
 
@@ -61,7 +60,6 @@ def user_detail(request, rater_id):
 
 
 def register_user(request):
-    print(request.method)
     if request.method == 'POST':
         rf = RaterForm(request.POST, prefix='rater')
         uf = UserCreationForm(request.POST, prefix='user')
@@ -73,10 +71,9 @@ def register_user(request):
             rater.id = user.id
             rater.save()
             return HttpResponseRedirect(reverse('movies:index'))
-        else:
-            messages.error(request, "Error")
-    rf = RaterForm(prefix='rater')
-    uf = UserCreationForm(prefix='user')
+    else:
+        rf = RaterForm(prefix='rater')
+        uf = UserCreationForm(prefix='user')
     context = {'raterform': rf, 'userform': uf}
     return render(request, 'registration/register.html', context)
 
