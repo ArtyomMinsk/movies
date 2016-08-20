@@ -1,10 +1,4 @@
 from django.conf.urls import url
-from django.contrib import admin
-from django.contrib.auth import views as auth_views
-from django.views.generic.edit import CreateView
-from django.contrib.auth.forms import UserCreationForm
-
-
 
 from . import views
 
@@ -22,8 +16,6 @@ urlpatterns = [
     url(r'^logout/$', views.logout_view, name='logout'),
     url(r'^test/$', views.test_table, name='test_table'),
 ]
-
-
 
 
 # For reference from: https://docs.djangoproject.com/en/1.10/intro/tutorial03/
