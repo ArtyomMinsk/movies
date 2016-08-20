@@ -6,6 +6,7 @@ from django.urls import reverse
 
 from .forms import RaterForm
 from .models import Movie, Rater
+from .youtube import youtube_search
 
 
 def index(request):
@@ -25,12 +26,14 @@ def movie_view(request):
 
 
 def movie_detail(request, movie_id):
+    search = youtube_search(movie_id)
     try:
         movie = Movie.objects.get(pk=movie_id)
         average_score = movie.get_average_score()
     except Movie.DoesNotExist:
         raise Http404("Movie doesn't exist")
     context = {
+        'search': search,
         'movie': movie,
         'average_score': '{0:.2f}'.format(average_score),
     }
