@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^register/$', views.register_user, name='register_user'),
     url(r'^logout/$', views.logout_view, name='logout'),
     url(r'^test/$', views.test_table, name='test_table'),
+    url(r'^movies_for_you/$', views.movies_for_you, name='movies_for_you'),
 ]
 
 
