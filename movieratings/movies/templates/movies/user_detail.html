@@ -34,7 +34,7 @@
             <tbody>
             {% for rating in rater.rating_set.all %}
                 <tr>
-                    <td><a href="{% url 'movies:movie_detail' rating.rater.id %}">{{ rating.movie.title }}</a></td>
+                    <td><a href="{% url 'movies:movie_detail' rating.movie.id %}">{{ rating.movie.title }}</a></td>
                     <td>{{ rating.score }}</td>
                     <td>{{ rating.review }}</td>
                     <td>{{ rating.timestamp }}</td>

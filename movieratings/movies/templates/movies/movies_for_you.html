@@ -1,4 +1,14 @@
 {% if user.is_authenticated %}
-  {{ user.rater }}
-  {{ user_ratings }}
+  <p>{{ user.rater }}</p>
+  {% for rating in user_ratings %}
+    {{ rating }}
+  {% endfor %}
+  <p>BREAK</p>
+  {{ rater_ratings }}
+  <p>BREAK</p>
+  {{ common1 }}
+  <p>BREAK</p>
+  {{ common2 }}
+  <p>Euclidean Distance</p>
+  {{ euclid }}
 {% endif %}

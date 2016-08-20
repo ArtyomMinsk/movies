@@ -2,7 +2,6 @@ from django.db import models
 from django.db.models import Count, Avg
 from django.contrib.auth.models import User
 from django.utils import timezone
-from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class Movie(models.Model):
@@ -61,6 +60,16 @@ class Rater(models.Model):
             return None
         else:
             return score
+
+    def euclidean_distance(v, w):
+        if len(v) is 0:
+            return 0
+
+        differences = [v[idx].score - w[idx].score for idx in range(len(v))]
+        squares = [diff ** 2 for diff in differences]
+        sum_of_squares = sum(squares)
+
+        return 1/(1 + (sum_of_squares ** 0.5))
 
 
 class Rating(models.Model):

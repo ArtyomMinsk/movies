@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from django.http import Http404, HttpResponseRedirect, HttpResponse
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
@@ -43,7 +43,8 @@ def movie_detail(request, movie_id):
 
         if user_rating:
             # User is logged in and has rated the movie
-            user_display = "You gave this movie a {}.".format(user_rating.score)
+            user_display = "You gave this movie a {}.".format(
+                                                        user_rating.score)
         else:
             # User is logged in, but has not rated the movie
             user_display = "Click here to rate this movie."
@@ -64,7 +65,8 @@ def movie_detail(request, movie_id):
                 print("New rating for unrated movie")
 
                 print("PRINT THIS ", rating_form)
-                user_rating = Rating(score=score, rater=rater, movie=movie, review=review)
+                user_rating = Rating(score=score, rater=rater,
+                                     movie=movie, review=review)
                 # user_rating = rating_form.save(commit=False)
                 user_rating.save()
 
@@ -150,8 +152,23 @@ def test_table(request):
 @login_required
 def movies_for_you(request):
     user = request.user
-    user_ratings = user.rater.rating_set.all()
+    set1 = user.rater.rating_set.all()
+    # others = Rater.objects.filter(id__ne=user.rater.id)
+    others = Rater.objects.all().exclude(id=user.rater.id)
+    for rater in others:
+        rater = Rater.objects.get(pk=2)
+        set2 = rater.rating_set.all()
+        common1 = set1.filter(
+                movie_id__in=[m.movie_id for m in set2]).order_by('movie_id')
+        common2 = set2.filter(
+                movie_id__in=[m.movie_id for m in set1]).order_by('movie_id')
+        euclid = Rater.euclidean_distance(common1, common2)
+        break
     context = {
-        user_ratings: 'user_ratings',
+        'user_ratings': set1,
+        'rater_ratings': set2,
+        'common1': common1,
+        'common2': common2,
+        'euclid': euclid,
     }
     return render(request, 'movies/movies_for_you.html', context)
