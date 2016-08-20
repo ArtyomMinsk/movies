@@ -6,7 +6,7 @@ from .models import Rater, Rating
 # class RatingForm(forms.ModelForm):
 #     class Meta:
 #         model = Rating
-#         fields = ('rating', 'review',)
+#         fields = ('rating', 'review')
 
 
 class RaterForm(forms.ModelForm):
