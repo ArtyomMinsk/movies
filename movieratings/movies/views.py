@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
 
@@ -91,3 +92,13 @@ def test_table(request):
         'movies': all_movies_scores
     }
     return render(request, 'movies/test_table.html', context)
+
+
+@login_required
+def movies_for_you(request):
+    user = request.user
+    user_ratings = user.rater.rating_set.all()
+    context = {
+        user_ratings: 'user_ratings',
+    }
+    return render(request, 'movies/movies_for_you.html', context)
