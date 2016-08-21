@@ -29,7 +29,6 @@ def movie_view(request):
 
 def movie_detail(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
-    print("MOVIE: ", movie)
     search = youtube_search(movie.title + 'trailer')
     try:
         first_result = search[0]
@@ -40,24 +39,22 @@ def movie_detail(request, movie_id):
     if request.user.is_authenticated():
         rater = request.user.rater
         user_rating = rater.get_score_for_movie(movie)
-        print("USER RATING: ", user_rating)
 
         rating_form = RatingForm(request.POST)
 
         if user_rating:
             # User is logged in and has rated the movie
-            user_display = "You gave this movie a {}.".format(
-                                                        user_rating.score)
+            user_display = """
+            You gave this movie a {}. Would you like to update your rating
+            and score?""".format(user_rating.score)
         else:
             # User is logged in, but has not rated the movie
             user_display = "Click here to rate this movie."
 
         if rating_form.is_valid():
-            print("Rating Form is Valid")
             score = rating_form.cleaned_data['score']
             review = rating_form.cleaned_data['review']
             if user_rating:
-                print("User editing existing rating")
                 # Edit the existing rating
                 user_rating.score = score
                 user_rating.review = review
@@ -109,6 +106,13 @@ def user_detail(request, rater_id):
         rater = Rater.objects.get(pk=rater_id)
     except Rater.DoesNotExist:
         raise Http404("Rater doesn't exist")
+    if request.user.is_authenticated:
+        if request.POST:
+            if request.POST.get("delete"):
+                r = Rating.objects.get(pk=request.POST.get("delete"))
+                r.delete()
+            elif request.POST.get("edit"):
+                print("Hello edit")
     context = {
         'rater': rater,
     }

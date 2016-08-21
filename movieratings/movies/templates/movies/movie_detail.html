@@ -26,13 +26,9 @@
         <td>{{ rating_form.review.label_tag }}</td>
         <td>{{ rating_form.review }}</td>
     </tr>
-    <tr>
-        <td>Review</td>
-        <td>Review</td>
-    </tr>
     </table>
 
-    <input type="submit" value="Submit Rating" />
+    <input type="submit" class="btn btn-secondary" value="Submit Rating" />
     <input type="hidden" name="next" value="{{ next }}" />
     </form>
 {% endif %}
