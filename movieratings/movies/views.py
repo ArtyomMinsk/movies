@@ -142,8 +142,21 @@ def register_user(request):
     return render(request, 'registration/register.html', context)
 
 
+# def login_view(request):
+#     username = request.POST['username']
+#     password = request.POST['password']
+#     user = authenticate(username=username, password=password)
+#     if user is not None:
+#         login(request, user)
+#         return HttpResponseRedirect(reverse('movies:index'))
+#     else:
+#         return HttpResponseRedirect(reverse('registration:login'))
+#
+
 def logout_view(request):
     logout(request)
+    username = None
+    password = None
     return HttpResponseRedirect(reverse('movies:index'))
 
 
