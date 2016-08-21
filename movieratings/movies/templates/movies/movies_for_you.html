@@ -1,14 +1,12 @@
+{% extends "movies/base.html" %}
+
+{% block body %}
 {% if user.is_authenticated %}
-  <p>{{ user.rater }}</p>
-  {% for rating in user_ratings %}
-    {{ rating }}
-  {% endfor %}
-  <p>BREAK</p>
-  {{ rater_ratings }}
-  <p>BREAK</p>
-  {{ common1 }}
-  <p>BREAK</p>
-  {{ common2 }}
-  <p>Euclidean Distance</p>
-  {{ euclid }}
+  <h1>Our Top Movies for You</h1>
+  <ol>
+    {% for movie in movie_list %}
+      <li>{{ movie.1.title }}</li>
+    {% endfor %}
+  </ol>
 {% endif %}
+{% endblock %}

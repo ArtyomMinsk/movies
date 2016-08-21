@@ -105,18 +105,27 @@ def movies_for_you(request):
     set1 = user.rater.rating_set.all()
     # others = Rater.objects.filter(id__ne=user.rater.id)
     others = Rater.objects.all().exclude(id=user.rater.id)
+    euclid_list = []
     for rater in others:
-        rater = Rater.objects.get(pk=2)
         set2 = rater.rating_set.all()
         common1 = set1.filter(movie_id__in=[m.movie_id for m in set2]).order_by('movie_id')
         common2 = set2.filter(movie_id__in=[m.movie_id for m in set1]).order_by('movie_id')
         euclid = Rater.euclidean_distance(common1, common2)
-        break
+        euclid_list.append((euclid, rater))
+    sorted_list = sorted(euclid_list, key=lambda x: x[0], reverse=True)[:5]
+    movie_recs = []
+    for user_tuple in sorted_list:
+        rater = user_tuple[1]
+        ratings = rater.rating_set.all()
+        for rating in ratings:
+            if set1.filter(movie_id=rating.movie_id):
+                pass
+            else:
+                euclid_rating = (rating.score * user_tuple[0], Movie.objects.get(id=rating.movie_id))
+                movie_recs.append(euclid_rating)
+    movie_list = sorted(movie_recs, key=lambda x: x[0], reverse=True)[:10]
+
     context = {
-        'user_ratings': set1,
-        'rater_ratings': set2,
-        'common1': common1,
-        'common2': common2,
-        'euclid': euclid,
+        'movie_list': movie_list,
     }
     return render(request, 'movies/movies_for_you.html', context)
