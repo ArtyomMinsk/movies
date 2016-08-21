@@ -112,7 +112,8 @@ def user_detail(request, rater_id):
                 r = Rating.objects.get(pk=request.POST.get("delete"))
                 r.delete()
             elif request.POST.get("edit"):
-                print("Hello edit")
+                m = Movie.objects.get(pk=request.POST.get("edit"))
+                return HttpResponseRedirect(reverse('movies:movie_detail', args=[m.id]))
     context = {
         'rater': rater,
     }
