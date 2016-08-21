@@ -31,13 +31,10 @@ def movie_detail(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
     print("MOVIE: ", movie)
     search = youtube_search(movie.title + 'trailer')
-<<<<<<< HEAD
     try:
         first_result = search[0]
     except IndexError:
         first_result = None
-=======
-    first_result = search[0]
 
     rating_form = None
     if request.user.is_authenticated():
@@ -84,7 +81,6 @@ def movie_detail(request, movie_id):
         # User is not logged in
         user_display = "Login to rate this movie."
 
->>>>>>> bc26402c881dcddc8101ce54af5b1f27098b61f1
     try:
         movie = Movie.objects.get(pk=movie_id)
         average_score = movie.get_average_score()

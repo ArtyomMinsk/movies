@@ -7,16 +7,11 @@
 
 {% block body %}
 <h1>{{ movie.title }}</h1>
-<<<<<<< HEAD
 {% if search != None %}
 <object style="height: 390px; width: 640px"><param name="movie"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="http://www.youtube.com/v/{{ search }}" allowfullscreen="true" allowScriptAccess="always" width="640" height="390"></object>
 {% endif %}
-=======
->>>>>>> bc26402c881dcddc8101ce54af5b1f27098b61f1
 <h3>{{ movie.genre }}</h3>
 <h4>Average Rating: {{ average_score }}</h4>
-<object style="height: 390px; width: 640px"><param name="movie"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="http://www.youtube.com/v/{{ search }}" allowfullscreen="true" allowScriptAccess="always" width="640" height="390"></object>
-
 <p> {{ user_display }}</p>
 
 {% if user.is_authenticated %}
