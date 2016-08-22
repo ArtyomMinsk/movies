@@ -5,6 +5,7 @@ This is a Django powered website that has a focus on movie ratings and reviews.
 ## Installation
 
 To get the site up and running locally:
+
 1. Clone the repo
 2. pip install -r requirements.txt
 3. Have a postgres server with an empty movies database
