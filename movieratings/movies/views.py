@@ -46,7 +46,7 @@ def movie_detail(request, movie_id):
             # User is logged in and has rated the movie
             user_display = """
             You gave this movie a {}. Would you like to update your rating
-            and score?""".format(user_rating.score)
+            and review?""".format(user_rating.score)
         else:
             # User is logged in, but has not rated the movie
             user_display = "Click here to rate this movie."
@@ -62,9 +62,6 @@ def movie_detail(request, movie_id):
                 user_rating.save()
             else:
                 # Add a new rating for this user
-                print("New rating for unrated movie")
-
-                print("PRINT THIS ", rating_form)
                 user_rating = Rating(score=score, rater=rater,
                                      movie=movie, review=review)
                 # user_rating = rating_form.save(commit=False)
@@ -172,6 +169,8 @@ def test_table(request):
 
 @login_required
 def movies_for_you(request):
+    # TODO split into separate functions
+    # TODO optimize so it doesn't take 5 minutes each time
     user = request.user
     set1 = user.rater.rating_set.all()
     # others = Rater.objects.filter(id__ne=user.rater.id)
